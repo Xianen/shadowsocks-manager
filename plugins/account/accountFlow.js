@@ -14,6 +14,16 @@ const add = async accountId => {
       port: accountInfo.port + server.shift,
       nextCheckTime: Date.now(),
     });
+    console.log('password: ' + accountInfo.password);
+    manager.send({
+      command: 'add',
+      port: accountInfo.port + server.shift,
+      password: accountInfo.password
+    }, {
+      host: server.host,
+      port: server.port,
+      password: server.password,
+    });
   };
   await Promise.all(servers.map(server => {
     return addAccountFlow(server, accountId);
